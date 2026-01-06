@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUGHWORKS // CENTRAL_HUB</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        crypto: '#00ff41',
+                        stocks: '#00ccff',
+                        void: '#05080a',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700;800&family=JetBrains+Mono:ital,wght@0,400;1,700&display=swap');
+
+        body {
+            background-color: #05080a;
+            color: #ffffff;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+        .blueprint-grid {
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+
+        .scanline {
+            width: 100%;
+            height: 100px;
+            z-index: 50;
+            background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(255,255,255,0.02) 50%, rgba(0,0,0,0) 100%);
+            position: absolute;
+            bottom: 100%;
+            animation: scan 8s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes scan {
+            0% { bottom: 100%; }
+            100% { bottom: -100px; }
+        }
+
+        .hub-card {
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            cursor: pointer;
+        }
+
+        .crypto-card:hover { box-shadow: 0 0 40px rgba(0, 255, 65, 0.1); }
+        .stocks-card:hover { box-shadow: 0 0 40px rgba(0, 204, 255, 0.1); }
+
+        .loading-bar-inner {
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        #handoff-overlay {
+            backdrop-filter: blur(10px);
+            transition: opacity 0.5s ease;
+        }
+    </style>
+</head>
+<body class="blueprint-grid flex flex-col items-center justify-center">
+    <div class="scanline"></div>
+
+    <div class="fixed top-0 left-0 w-full h-full pointer-events-none opacity-10 font-mono text-[8px] flex justify-between px-4 py-2 overflow-hidden">
+        <div id="left-stream"></div>
+        <div id="right-stream"></div>
+    </div>
+
+    <header class="mb-12 text-center relative z-20">
+        <div class="inline-block border border-white/20 bg-white/5 backdrop-blur-md px-4 py-1 mb-4">
+            <span class="font-mono text-[10px] tracking-[0.4em] text-white/60 uppercase">System_Selection_Protocol_v4.2</span>
+        </div>
+        <h1 class="text-6xl md:text-8xl font-black italic uppercase leading-none tracking-tighter">
+            LUGH<span class="text-white/20 font-light">WORKS</span>
+        </h1>
+        <div class="h-[1px] w-full bg-gradient-to-r from-transparent via-white/20 to-transparent mt-4"></div>
+    </header>
+
+    <main class="flex flex-col md:flex-row gap-8 w-full max-w-6xl px-8 relative z-20">
+        
+        <div onclick="initiateRedirect('stocks')" class="hub-card stocks-card group flex-1 border border-white/10 bg-void/80 backdrop-blur-xl p-12 hover:border-stocks/50">
+            <div class="relative z-10">
+                <span class="font-mono text-xs text-stocks italic mb-4 block">TERMINAL_01 // TRADITIONAL</span>
+                <h2 class="text-5xl font-black uppercase italic mb-6 group-hover:text-stocks transition-colors">STOCKS<br>_OS</h2>
+                <p class="text-[11px] text-zinc-500 uppercase leading-relaxed mb-8 max-w-[280px]">
+                    Equities, Dividends, and Fundamental Valuation. Master the legacy markets with precision intelligence.
+                </p>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-full border border-stocks/20 flex items-center justify-center group-hover:bg-stocks group-hover:border-stocks transition-all">
+                        <svg class="w-5 h-5 text-stocks group-hover:text-void transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
+                    </div>
+                    <span class="font-mono text-[10px] text-zinc-400 group-hover:text-white transition-colors uppercase italic font-bold">Initialize_Legacy_Core</span>
+                </div>
+            </div>
+            <div class="absolute top-0 right-0 w-16 h-16 border-t border-r border-stocks/0 group-hover:border-stocks/40 transition-all"></div>
+        </div>
+
+        <div onclick="initiateRedirect('crypto')" class="hub-card crypto-card group flex-1 border border-white/10 bg-void/80 backdrop-blur-xl p-12 hover:border-crypto/50">
+            <div class="relative z-10">
+                <span class="font-mono text-xs text-crypto italic mb-4 block">TERMINAL_02 // DECENTRALIZED</span>
+                <h2 class="text-5xl font-black uppercase italic mb-6 group-hover:text-crypto transition-colors">CRYPTO<br>_OS</h2>
+                <p class="text-[11px] text-zinc-500 uppercase leading-relaxed mb-8 max-w-[280px]">
+                    Blockchains, DeFi, and On-Chain Analysis. Navigate the volatility of the permissionless future.
+                </p>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-full border border-crypto/20 flex items-center justify-center group-hover:bg-crypto group-hover:border-crypto transition-all">
+                        <svg class="w-5 h-5 text-crypto group-hover:text-void transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    </div>
+                    <span class="font-mono text-[10px] text-zinc-400 group-hover:text-white transition-colors uppercase italic font-bold">Initialize_Degen_Core</span>
+                </div>
+            </div>
+            <div class="absolute top-0 right-0 w-16 h-16 border-t border-r border-crypto/0 group-hover:border-crypto/40 transition-all"></div>
+        </div>
+
+    </main>
+
+    <footer class="mt-20 font-mono text-[9px] text-zinc-600 uppercase tracking-[0.5em] italic">
+        Integrated_Market_Solutions // Central_Command
+    </footer>
+
+    <div id="handoff-overlay" class="fixed inset-0 bg-void/95 z-[100] hidden flex flex-col items-center justify-center p-8">
+        <div class="w-full max-w-md text-center">
+            <div id="handoff-icon" class="mb-8 flex justify-center"></div>
+            <div class="font-mono text-[10px] text-zinc-500 uppercase tracking-widest mb-2" id="handoff-status">Handshaking_With_Remote_Server</div>
+            <div class="text-2xl font-black italic uppercase mb-8" id="handoff-title">Redirecting_Terminal</div>
+            
+            <div class="w-full h-[2px] bg-white/5 relative mb-4">
+                <div id="loading-bar" class="h-full bg-white absolute left-0 top-0 transition-all duration-300"></div>
+            </div>
+            <div id="handoff-log" class="font-mono text-[8px] text-zinc-600 uppercase h-4"></div>
+        </div>
+    </div>
+
+    <script>
+        const REDIRECT_URLS = {
+            stocks: 'https://stocks.lughworks.io',
+            crypto: 'https://crypto.lughworks.io'
+        };
+
+        function initiateRedirect(type) {
+            const overlay = document.getElementById('handoff-overlay');
+            const title = document.getElementById('handoff-title');
+            const bar = document.getElementById('loading-bar');
+            const status = document.getElementById('handoff-status');
+            const log = document.getElementById('handoff-log');
+            const iconBox = document.getElementById('handoff-icon');
+            
+            const color = type === 'crypto' ? '#00ff41' : '#00ccff';
+            
+            overlay.classList.remove('hidden');
+            title.innerText = `${type.toUpperCase()}_OS // INITIALIZING`;
+            title.style.color = color;
+            bar.style.backgroundColor = color;
+
+            const logs = [
+                "establishing_secure_tunnel",
+                "fetching_user_credentials",
+                "validating_market_feeds",
+                "handshake_complete",
+                "executing_handoff"
+            ];
+
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        window.location.href = REDIRECT_URLS[type];
+                    }, 500);
+                }
+                
+                bar.style.width = `${progress}%`;
+                const logIndex = Math.floor((progress / 100) * logs.length);
+                if(logs[logIndex]) log.innerText = `> ${logs[logIndex]}...`;
+            }, 150);
+        }
+
+        function updateStreams() {
+            const left = document.getElementById('left-stream');
+            const right = document.getElementById('right-stream');
+            const data = () => `SYS_${Math.random().toString(16).substring(2, 8).toUpperCase()} // FEED_${(Math.random() * 99).toFixed(0)} // ${Math.random() > 0.8 ? 'ENCRYPTED' : 'STREAMING'}`;
+            let lContent = "", rContent = "";
+            for(let i=0; i<45; i++) {
+                lContent += `<div>${data()}</div>`;
+                rContent += `<div>${data()}</div>`;
+            }
+            left.innerHTML = lContent;
+            right.innerHTML = rContent;
+        }
+        setInterval(updateStreams, 150);
+        updateStreams();
+    </script>
+</body>
+</html>
